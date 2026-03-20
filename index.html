@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inkwell — Write better songs. In your voice.</title>
+  <meta name="description" content="Inkwell is a lyric writing studio with an AI co-writer that learns your voice. Free. Bilingual EN/FR.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Base ──────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream:     #FDF6EC;
+      --cream-mid: #F5E6CC;
+      --amber:     #C8956C;
+      --amber-dark:#A1714D;
+      --brown:     #5C3D2E;
+      --brown-deep:#3B2518;
+      --ink:       #2A1A0E;
+      --white:     #FFFDF9;
+      --shadow-sm: 0 1px 3px rgba(42,26,14,.08);
+      --shadow-md: 0 4px 16px rgba(42,26,14,.1);
+      --shadow-lg: 0 8px 32px rgba(42,26,14,.12);
+      --radius:    12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Nav ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(253,246,236,.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(200,149,108,.12);
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      color: var(--brown-deep);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      color: var(--brown);
+      transition: color 0.15s;
+    }
+    .nav-link:hover {
+      color: var(--amber);
+    }
+
+    .lang-toggle {
+      background: var(--cream-mid);
+      border: 1px solid rgba(200,149,108,.25);
+      border-radius: 8px;
+      padding: 6px 4px;
+      display: flex;
+      gap: 2px;
+      cursor: pointer;
+    }
+
+    .lang-toggle button {
+      background: none;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--brown);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .lang-toggle button.active {
+      background: var(--white);
+      color: var(--brown-deep);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all .25s;
+    }
+
+    .btn-primary {
+      background: var(--brown-deep);
+      color: var(--cream);
+    }
+
+    .btn-primary:hover {
+      background: var(--ink);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--brown-deep);
+      border: 1.5px solid var(--amber);
+    }
+
+    .btn-secondary:hover {
+      background: var(--cream-mid);
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    .hero {
+      padding: 140px 0 80px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(200,149,108,.15);
+      border: 1px solid rgba(200,149,108,.25);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--amber-dark);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      color: var(--brown-deep);
+      margin-bottom: 20px;
+      letter-spacing: -0.025em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--amber-dark);
+    }
+
+    .hero-sub {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--brown);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      opacity: .85;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-cta .btn { padding: 14px 30px; font-size: 1rem; }
+
+    .hero-screenshot {
+      margin: 64px auto 0;
+      max-width: 900px;
+      aspect-ratio: 16/9.5;
+      background: linear-gradient(135deg, var(--cream-mid), rgba(200,149,108,.2));
+      border: 1px solid rgba(200,149,108,.2);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--amber);
+      font-size: 0.9rem;
+      font-weight: 500;
+      overflow: hidden;
+    }
+
+    .hero-screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+    }
+
+    /* ── Section layout ────────────────────────────── */
+    section { padding: 80px 0; }
+
+    .section-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: var(--brown-deep);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--brown);
+      opacity: .8;
+      max-width: 520px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-header .section-sub {
+      margin: 0 auto;
+    }
+
+    /* ── Features Grid ─────────────────────────────── */
+    .features {
+      background: linear-gradient(180deg, var(--cream) 0%, rgba(245,230,204,.4) 100%);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      border: 1px solid rgba(200,149,108,.15);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all .3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(200,149,108,.3);
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(200,149,108,.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      color: var(--brown-deep);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 0.92rem;
+      color: var(--brown);
+      opacity: .8;
+      line-height: 1.55;
+    }
+
+    /* ── Highlight (AI Co-Writer) ──────────────────── */
+    .highlight {
+      background: var(--white);
+      border-top: 1px solid rgba(200,149,108,.1);
+      border-bottom: 1px solid rgba(200,149,108,.1);
+    }
+
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .highlight-content .section-label { text-align: left; }
+    .highlight-content .section-title { text-align: left; }
+
+    .highlight-content .section-sub {
+      text-align: left;
+      margin-bottom: 28px;
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tool-tag {
+      padding: 6px 14px;
+      background: rgba(200,149,108,.1);
+      border: 1px solid rgba(200,149,108,.2);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--amber-dark);
+    }
+
+    .highlight-screenshot {
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--cream-mid), rgba(200,149,108,.15));
+      border: 1px solid rgba(200,149,108,.15);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--amber);
+      font-size: 0.85rem;
+      font-weight: 500;
+      overflow: hidden;
+    }
+
+    .highlight-screenshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+    }
+
+    /* ── Differentiators ───────────────────────────── */
+    .differentiators-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .diff-card {
+      text-align: center;
+      padding: 36px 24px;
+    }
+
+    .diff-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 18px;
+      background: rgba(200,149,108,.1);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .diff-card h3 {
+      font-size: 1.15rem;
+      color: var(--brown-deep);
+      margin-bottom: 8px;
+    }
+
+    .diff-card p {
+      font-size: 0.9rem;
+      color: var(--brown);
+      opacity: .8;
+      line-height: 1.55;
+    }
+
+    /* ── Pricing ───────────────────────────────────── */
+    .pricing {
+      padding: 100px 0;
+      background: var(--cream-mid);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid rgba(200,149,108,.15);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pricing-card.featured {
+      border: 2px solid var(--amber);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--amber);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.03em;
+    }
+
+    .pricing-header {
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(200,149,108,.15);
+      margin-bottom: 24px;
+    }
+
+    .pricing-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.5rem;
+      color: var(--brown-deep);
+      margin-bottom: 12px;
+    }
+
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .price-amount {
+      font-family: 'Instrument Serif', serif;
+      font-size: 3rem;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .price-period {
+      font-size: 14px;
+      color: var(--brown);
+      opacity: .7;
+    }
+
+    .pricing-features {
+      list-style: none;
+      flex: 1;
+      margin-bottom: 24px;
+    }
+
+    .pricing-features li {
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--brown);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    .pricing-features li.highlight {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .pricing-card .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .pricing-note {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 13px;
+      color: var(--brown);
+      opacity: .7;
+    }
+
+    @media (max-width: 900px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .pricing-card.featured {
+        order: -1;
+      }
+    }
+
+    /* ── CTA Banner ────────────────────────────────── */
+    .cta-section {
+      padding: 100px 0;
+    }
+
+    .cta-banner {
+      background: linear-gradient(135deg, var(--brown-deep), var(--brown));
+      border-radius: var(--radius-lg);
+      padding: 64px 48px;
+      text-align: center;
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(200,149,108,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-banner h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .cta-banner p {
+      font-size: 1.05rem;
+      opacity: .75;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .cta-banner .btn-primary {
+      background: var(--cream);
+      color: var(--brown-deep);
+      padding: 14px 32px;
+      font-size: 1rem;
+      position: relative;
+    }
+
+    .cta-banner .btn-primary:hover {
+      background: var(--white);
+      box-shadow: 0 4px 24px rgba(0,0,0,.2);
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid rgba(200,149,108,.12);
+    }
+
+    footer .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-left {
+      font-size: 0.85rem;
+      color: var(--brown);
+      opacity: .6;
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-right a {
+      font-size: 0.85rem;
+      color: var(--brown);
+      opacity: .6;
+      transition: opacity .2s;
+    }
+
+    .footer-right a:hover { opacity: 1; }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero { padding: 120px 0 60px; }
+
+      .highlight-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .highlight-grid .highlight-screenshot { order: -1; }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .differentiators-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cta-banner {
+        padding: 48px 28px;
+      }
+
+      nav .container { height: 56px; }
+      .hero { padding-top: 110px; }
+    }
+
+    @media (max-width: 480px) {
+      .differentiators-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-cta .btn { width: 100%; justify-content: center; }
+    }
+
+    /* ── Subtle animation ──────────────────────────── */
+    @media (prefers-reduced-motion: no-preference) {
+      .feature-card, .diff-card, .highlight-screenshot {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity .5s ease, transform .5s ease;
+      }
+      .feature-card.visible, .diff-card.visible, .highlight-screenshot.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .feature-card, .diff-card, .highlight-screenshot {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+  <!-- Plausible Analytics -->
+  <script defer data-domain="harmonious-biscochitos-b65214.netlify.app" src="https://plausible.io/js/pa-AJMefUHRHrVXJyUFhLOes.js"></script>
+</head>
+<body>
+
+  <!-- ── Nav ──────────────────────────────────────── -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">Inkwell</a>
+      <div class="nav-right">
+        <a href="#features" class="nav-link" data-t="nav.features">Features</a>
+        <a href="#pricing" class="nav-link" data-t="nav.pricing">Pricing</a>
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button class="active" onclick="setLang('en')" aria-label="English">EN</button>
+          <button onclick="setLang('fr')" aria-label="Français">FR</button>
+        </div>
+        <a href="https://inkwell-lyric-app.netlify.app" class="btn btn-primary" target="_blank" rel="noopener">
+          <span data-t="nav.openApp">Open Inkwell</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3h7v7"/><path d="M13 3L6 10"/></svg>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Hero ─────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge" data-t="hero.badge">Free lyric writing studio</div>
+      <h1 data-t="hero.title" data-t-html="true">Write better songs.<br><em>In your voice.</em></h1>
+      <p class="hero-sub" data-t="hero.subtitle">Inkwell is a lyric writing studio with an AI co-writer that learns how you write — so it can help without overwriting you.</p>
+      <div class="hero-cta">
+        <a href="https://inkwell-lyric-app.netlify.app" class="btn btn-primary" target="_blank" rel="noopener">
+          <span data-t="hero.cta.start">Start Writing</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10"/><path d="M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="#features" class="btn btn-secondary" data-t="hero.cta.features">See Features</a>
+      </div>
+      <div class="hero-screenshot">
+        <img src="screenshots/editor-main.png" alt="Inkwell lyric editor" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AI Co-Writer Highlight ───────────────────── -->
+  <section class="highlight">
+    <div class="container">
+      <div class="highlight-grid">
+        <div class="highlight-content">
+          <p class="section-label" data-t="highlight.label">AI Co-Writer</p>
+          <h2 class="section-title" data-t="highlight.title">14 tools. Zero generic output.</h2>
+          <p class="section-sub" data-t="highlight.subtitle">The AI panel isn't a chatbot — it's a set of focused tools built for lyric writing. Rhyme finders, phrase builders, word families, and more. Each one designed to spark ideas, not replace yours.</p>
+          <div class="tool-tags">
+            <span class="tool-tag" data-t="tools.rhyme">Rhyme Finder</span>
+            <span class="tool-tag" data-t="tools.phrase">Phrase Finder</span>
+            <span class="tool-tag" data-t="tools.wordFamily">Word Families</span>
+            <span class="tool-tag" data-t="tools.simile">Simile Builder</span>
+            <span class="tool-tag" data-t="tools.alliteration">Alliteration</span>
+            <span class="tool-tag" data-t="tools.rewriter">Line Rewriter</span>
+            <span class="tool-tag" data-t="tools.more">+ 8 more</span>
+          </div>
+        </div>
+        <div class="highlight-screenshot">
+          <img src="screenshots/word-families.png" alt="AI tools panel showing word families" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Features Grid ────────────────────────────── -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-t="features.label">Features</p>
+        <h2 class="section-title" data-t="features.title">Everything you need, nothing you don't</h2>
+        <p class="section-sub" data-t="features.subtitle">Built by songwriters who got tired of switching between five different apps.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎭</div>
+          <h3 data-t="feature.voiceProfiles.title">Voice Profiles</h3>
+          <p data-t="feature.voiceProfiles.desc">During onboarding, the AI learns your writing style — your tendencies, your vocabulary, your instincts. Suggestions sound like you, not a machine.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔀</div>
+          <h3 data-t="feature.versioning.title">Section Versioning</h3>
+          <p data-t="feature.versioning.desc">Fork any section to try a different direction. Compare A/B versions side by side. Keep what works, discard what doesn't — safely.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📋</div>
+          <h3 data-t="feature.scratchPad.title">Scratch Pad</h3>
+          <p data-t="feature.scratchPad.desc">Collect AI suggestions, stray ideas, and half-formed lines without leaving your flow. Drag them into your lyrics when you're ready.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3 data-t="feature.rhymeBrowser.title">Rhyme Browser</h3>
+          <p data-t="feature.rhymeBrowser.desc">Filter rhymes by syllable count, perfect vs. near matches, and more. A proper rhyme dictionary, not a toy.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 data-t="feature.intensifiers.title">Intensifiers Panel</h3>
+          <p data-t="feature.intensifiers.desc">Mood-aware power words at your fingertips. When a line needs more weight, browse words that match the emotional register you're working in.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎙️</div>
+          <h3 data-t="feature.audioRecorder.title">Audio Recorder</h3>
+          <p data-t="feature.audioRecorder.desc">Capture melody ideas, vocal phrasing, or rough demos right alongside your lyrics. Everything stays in one place.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3 data-t="feature.overview.title">Full Song Overview</h3>
+          <p data-t="feature.overview.desc">See your entire song in a split view. Jump between sections, spot structural issues, and get the big picture without losing your place.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⏪</div>
+          <h3 data-t="feature.history.title">History & Undo</h3>
+          <p data-t="feature.history.desc">Experiment without fear. Full history lets you rewind to any previous state. Try things — you can always go back.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3 data-t="feature.bilingual.title">Bilingual EN/FR</h3>
+          <p data-t="feature.bilingual.desc">Full interface and AI tools available in both English and French. Write in the language that fits the song.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Differentiators ──────────────────────────── -->
+  <section class="differentiators">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-t="why.label">Why Inkwell</p>
+        <h2 class="section-title" data-t="why.title">Your tool, your voice</h2>
+      </div>
+
+      <div class="differentiators-grid">
+        <div class="diff-card">
+          <div class="diff-icon">🪞</div>
+          <h3 data-t="why.notGeneric.title">Not a generic AI</h3>
+          <p data-t="why.notGeneric.desc">It learns your specific voice and style. Suggestions are shaped by how you write, not by how everyone writes.</p>
+        </div>
+
+        <div class="diff-card">
+          <div class="diff-icon">🔍</div>
+          <h3 data-t="why.specificity.title">Specificity over abstraction</h3>
+          <p data-t="why.specificity.desc">Trained to push for concrete details and vivid imagery. Vague lyrics are easy — specific ones are what people remember.</p>
+        </div>
+
+        <div class="diff-card">
+          <div class="diff-icon">📚</div>
+          <h3 data-t="why.classic.title">Classic tools, modern feel</h3>
+          <p data-t="why.classic.desc">Inspired by tools like MasterWriter, rebuilt for how people actually write today — with AI where it helps, craft tools where it doesn't.</p>
+        </div>
+
+        <div class="diff-card">
+          <div class="diff-icon">🆓</div>
+          <h3 data-t="why.free.title">Generous free tier</h3>
+          <p data-t="why.free.desc">50 AI generations per month, free forever. Upgrade when you're ready — or don't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pricing ──────────────────────────────────── -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label" data-t="pricing.label">Pricing</p>
+        <h2 class="section-title" data-t="pricing.title">Start free. Upgrade when you need more.</h2>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Free -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 class="pricing-name">Free</h3>
+            <div class="pricing-price">
+              <span class="price-amount">$0</span>
+              <span class="price-period" data-t="pricing.free.period">forever</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li data-t="pricing.free.f1">50 AI generations / month</li>
+            <li data-t="pricing.free.f2">All 14 AI tools</li>
+            <li data-t="pricing.free.f3">Voice profiles (local)</li>
+            <li data-t="pricing.free.f4">Export to TXT / Markdown</li>
+          </ul>
+          <a href="https://inkwell-lyric-app.netlify.app" class="btn btn-secondary" target="_blank" rel="noopener" data-t="pricing.free.cta">Start Writing</a>
+        </div>
+
+        <!-- Creator -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge" data-t="pricing.creator.badge">Most Popular</div>
+          <div class="pricing-header">
+            <h3 class="pricing-name">Creator</h3>
+            <div class="pricing-price">
+              <span class="price-amount">$9</span>
+              <span class="price-period" data-t="pricing.creator.period">/ month</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li data-t="pricing.creator.f1">500 AI generations / month</li>
+            <li data-t="pricing.creator.f2">All 14 AI tools</li>
+            <li data-t="pricing.creator.f3">Voice profiles (cloud sync)</li>
+            <li data-t="pricing.creator.f4">Section versioning</li>
+            <li data-t="pricing.creator.f5">Audio recorder</li>
+            <li data-t="pricing.creator.f6">Export to TXT / Markdown / PDF</li>
+            <li class="highlight" data-t="pricing.creator.f7">Priority support</li>
+          </ul>
+          <a href="#" class="btn btn-primary" id="checkout-creator" data-t="pricing.creator.cta">Get Creator</a>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3 class="pricing-name">Pro</h3>
+            <div class="pricing-price">
+              <span class="price-amount">$19</span>
+              <span class="price-period" data-t="pricing.pro.period">/ month</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li class="highlight" data-t="pricing.pro.f1">Unlimited AI generations</li>
+            <li data-t="pricing.pro.f2">All 14 AI tools</li>
+            <li data-t="pricing.pro.f3">Voice profiles (cloud sync)</li>
+            <li data-t="pricing.pro.f4">Multi-device sync</li>
+            <li data-t="pricing.pro.f5">Audio recorder</li>
+            <li data-t="pricing.pro.f6">All export formats</li>
+            <li class="highlight" data-t="pricing.pro.f7">Priority support</li>
+          </ul>
+          <a href="#" class="btn btn-secondary" id="checkout-pro" data-t="pricing.pro.cta">Get Pro</a>
+        </div>
+      </div>
+
+      <p class="pricing-note" data-t="pricing.note">All plans include a 7-day money-back guarantee. Cancel anytime.</p>
+    </div>
+  </section>
+
+  <!-- ── CTA ──────────────────────────────────────── -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-banner">
+        <h2 data-t="cta.title">Your next song is waiting</h2>
+        <p data-t="cta.subtitle">Start with 50 free AI generations per month. No credit card required.</p>
+        <a href="https://inkwell-lyric-app.netlify.app" class="btn btn-primary" target="_blank" rel="noopener">
+          <span data-t="cta.button">Open Inkwell</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 3h7v7"/><path d="M13 3L6 10"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ───────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-left" data-t="footer.copyright">© 2026 Inkwell. A tool for songwriters.</div>
+      <div class="footer-right">
+        <a href="https://inkwell-lyric-app.netlify.app" target="_blank" rel="noopener" data-t="footer.openApp">Open App</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ──────────────────────────────────── -->
+  <script>
+    // Translation system
+    const FIREBASE_API_KEY = 'AIzaSyDBLCnPauZJeg2JGriKp9KM-QFjYmSf12s';
+    const FIREBASE_PROJECT = 'charlotte-dashboard';
+    const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents`;
+    
+    let translations = {};
+    let currentLang = 'en';
+
+    // Load translations from Firestore
+    async function loadTranslations() {
+      try {
+        const url = `${FIRESTORE_BASE}/inkwell_config/translations?key=${FIREBASE_API_KEY}`;
+        const res = await fetch(url);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.fields?.data?.stringValue) {
+            translations = JSON.parse(data.fields.data.stringValue);
+            applyTranslations();
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load translations:', err);
+      }
+    }
+
+    // Apply translations to all elements with data-t attribute
+    function applyTranslations() {
+      document.querySelectorAll('[data-t]').forEach(el => {
+        const key = el.dataset.t;
+        const text = translations[key]?.[currentLang];
+        if (text) {
+          if (el.dataset.tHtml === 'true') {
+            el.innerHTML = text;
+          } else {
+            el.textContent = text;
+          }
+        }
+      });
+    }
+
+    // Language toggle
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-toggle button').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
+      });
+      applyTranslations();
+    }
+
+    // Scroll reveal
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll('.feature-card, .diff-card, .highlight-screenshot').forEach(el => {
+        observer.observe(el);
+      });
+    }
+
+    // Stripe Checkout
+    async function checkout(plan) {
+      const btn = document.getElementById('checkout-' + plan);
+      const originalText = btn.textContent;
+      btn.textContent = currentLang === 'fr' ? 'Chargement...' : 'Loading...';
+      btn.style.pointerEvents = 'none';
+
+      try {
+        const res = await fetch('/.netlify/functions/create-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            plan: plan,
+            successUrl: 'https://inkwell-lyric-app.netlify.app?checkout=success&plan=' + plan,
+            cancelUrl: window.location.href
+          })
+        });
+
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error(data.error || 'Checkout failed');
+        }
+      } catch (err) {
+        console.error('Checkout error:', err);
+        alert('Something went wrong. Please try again.');
+        btn.textContent = originalText;
+        btn.style.pointerEvents = '';
+      }
+    }
+
+    document.getElementById('checkout-creator')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      checkout('creator');
+    });
+
+    document.getElementById('checkout-pro')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      checkout('pro');
+    });
+
+    // Initialize
+    loadTranslations();
+  </script>
+
+</body>
+</html>

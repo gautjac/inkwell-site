@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inkwell — Translation Editor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --cream: #FDF6EC;
+      --cream-mid: #F5E6CC;
+      --amber: #C8956C;
+      --amber-dark: #A1714D;
+      --brown: #5C3D2E;
+      --brown-deep: #3B2518;
+      --ink: #2A1A0E;
+      --white: #FFFDF9;
+      --green: #4CAF50;
+      --red: #e53935;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(200,149,108,.2);
+    }
+    
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--brown-deep);
+    }
+    
+    .header-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .btn-primary {
+      background: var(--brown-deep);
+      color: var(--cream);
+    }
+    
+    .btn-primary:hover {
+      background: var(--ink);
+    }
+    
+    .btn-secondary {
+      background: var(--cream-mid);
+      color: var(--brown-deep);
+      border: 1px solid rgba(200,149,108,.3);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(200,149,108,.2);
+    }
+    
+    .status {
+      font-size: 13px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: var(--cream-mid);
+      color: var(--brown);
+    }
+    
+    .status.saved {
+      background: rgba(76, 175, 80, 0.15);
+      color: var(--green);
+    }
+    
+    .status.unsaved {
+      background: rgba(229, 57, 53, 0.15);
+      color: var(--red);
+    }
+    
+    .search-bar {
+      margin-bottom: 24px;
+    }
+    
+    .search-bar input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(200,149,108,.25);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      background: var(--white);
+    }
+    
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--amber);
+    }
+    
+    .translations-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .translation-item {
+      background: var(--white);
+      border: 1px solid rgba(200,149,108,.15);
+      border-radius: 10px;
+      padding: 16px 20px;
+      transition: border-color 0.2s;
+    }
+    
+    .translation-item:hover {
+      border-color: rgba(200,149,108,.3);
+    }
+    
+    .translation-item.modified {
+      border-color: var(--amber);
+    }
+    
+    .translation-key {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--amber-dark);
+      margin-bottom: 12px;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    
+    .translation-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    .field label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brown);
+    }
+    
+    .field textarea {
+      width: 100%;
+      min-height: 60px;
+      padding: 10px 12px;
+      border: 1px solid rgba(200,149,108,.2);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: vertical;
+      background: var(--cream);
+    }
+    
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--amber);
+      background: var(--white);
+    }
+    
+    .field textarea.fr {
+      background: rgba(200,149,108,.08);
+    }
+    
+    .field textarea.fr:focus {
+      background: var(--white);
+    }
+    
+    @media (max-width: 768px) {
+      .translation-fields {
+        grid-template-columns: 1fr;
+      }
+      
+      header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+      }
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--brown-deep);
+      color: var(--cream);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 4px 8px;
+      font-size: 11px;
+      background: var(--cream-mid);
+      border: 1px solid rgba(200,149,108,.2);
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    
+    .translation-item:hover .copy-btn {
+      opacity: 1;
+    }
+    
+    .field-wrapper {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>🌐 Inkwell Translations</h1>
+      <div class="header-actions">
+        <span class="status" id="status">Loading...</span>
+        <button class="btn btn-secondary" id="download-btn">Download JSON</button>
+        <button class="btn btn-primary" id="save-btn">Save & Deploy</button>
+      </div>
+    </header>
+    
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search translations by key or text...">
+    </div>
+    
+    <div class="translations-list" id="translations-list">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+  
+  <div class="toast" id="toast">Saved!</div>
+
+  <script>
+    const FIREBASE_API_KEY = 'AIzaSyDBLCnPauZJeg2JGriKp9KM-QFjYmSf12s';
+    const FIREBASE_PROJECT = 'charlotte-dashboard';
+    const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT}/databases/(default)/documents`;
+    
+    let translations = {};
+    let originalTranslations = {};
+    let hasUnsavedChanges = false;
+    
+    // Load translations from JSON file or Firestore
+    async function loadTranslations() {
+      try {
+        // Try Firestore first
+        const firestoreUrl = `${FIRESTORE_BASE}/inkwell_config/translations?key=${FIREBASE_API_KEY}`;
+        const res = await fetch(firestoreUrl);
+        
+        if (res.ok) {
+          const data = await res.json();
+          if (data.fields?.data?.stringValue) {
+            translations = JSON.parse(data.fields.data.stringValue);
+            originalTranslations = JSON.parse(data.fields.data.stringValue);
+            updateStatus('saved');
+            renderTranslations();
+            return;
+          }
+        }
+        
+        // Fall back to local JSON file
+        const jsonRes = await fetch('translations.json');
+        if (jsonRes.ok) {
+          translations = await jsonRes.json();
+          originalTranslations = JSON.parse(JSON.stringify(translations));
+          updateStatus('saved');
+          renderTranslations();
+        }
+      } catch (err) {
+        console.error('Failed to load translations:', err);
+        updateStatus('error');
+      }
+    }
+    
+    function renderTranslations(filter = '') {
+      const container = document.getElementById('translations-list');
+      const filterLower = filter.toLowerCase();
+      
+      const entries = Object.entries(translations).filter(([key, values]) => {
+        if (!filter) return true;
+        return key.toLowerCase().includes(filterLower) ||
+               values.en?.toLowerCase().includes(filterLower) ||
+               values.fr?.toLowerCase().includes(filterLower);
+      });
+      
+      container.innerHTML = entries.map(([key, values]) => {
+        const isModified = JSON.stringify(values) !== JSON.stringify(originalTranslations[key]);
+        return `
+          <div class="translation-item ${isModified ? 'modified' : ''}" data-key="${key}">
+            <div class="translation-key">${key}</div>
+            <div class="translation-fields">
+              <div class="field">
+                <label>English (EN)</label>
+                <div class="field-wrapper">
+                  <textarea class="en" data-key="${key}" data-lang="en">${escapeHtml(values.en || '')}</textarea>
+                </div>
+              </div>
+              <div class="field">
+                <label>Français (FR)</label>
+                <div class="field-wrapper">
+                  <textarea class="fr" data-key="${key}" data-lang="fr">${escapeHtml(values.fr || '')}</textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      
+      // Add event listeners
+      container.querySelectorAll('textarea').forEach(textarea => {
+        textarea.addEventListener('input', handleInput);
+      });
+    }
+    
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    function handleInput(e) {
+      const key = e.target.dataset.key;
+      const lang = e.target.dataset.lang;
+      translations[key][lang] = e.target.value;
+      
+      hasUnsavedChanges = JSON.stringify(translations) !== JSON.stringify(originalTranslations);
+      updateStatus(hasUnsavedChanges ? 'unsaved' : 'saved');
+      
+      // Mark item as modified
+      const item = e.target.closest('.translation-item');
+      const isModified = JSON.stringify(translations[key]) !== JSON.stringify(originalTranslations[key]);
+      item.classList.toggle('modified', isModified);
+    }
+    
+    function updateStatus(state) {
+      const statusEl = document.getElementById('status');
+      statusEl.className = 'status ' + state;
+      
+      switch (state) {
+        case 'saved':
+          statusEl.textContent = '✓ All changes saved';
+          break;
+        case 'unsaved':
+          statusEl.textContent = '● Unsaved changes';
+          break;
+        case 'saving':
+          statusEl.textContent = 'Saving...';
+          break;
+        case 'error':
+          statusEl.textContent = '✗ Error';
+          break;
+        default:
+          statusEl.textContent = state;
+      }
+    }
+    
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+    
+    async function saveTranslations() {
+      updateStatus('saving');
+      
+      try {
+        // Save to Firestore
+        const url = `${FIRESTORE_BASE}/inkwell_config/translations?key=${FIREBASE_API_KEY}`;
+        const payload = {
+          fields: {
+            data: { stringValue: JSON.stringify(translations, null, 2) },
+            updatedAt: { timestampValue: new Date().toISOString() }
+          }
+        };
+        
+        const res = await fetch(url, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        
+        if (!res.ok) throw new Error('Failed to save to Firestore');
+        
+        originalTranslations = JSON.parse(JSON.stringify(translations));
+        hasUnsavedChanges = false;
+        updateStatus('saved');
+        showToast('Translations saved! Run deploy to publish.');
+        
+        // Re-render to update modified states
+        renderTranslations(document.getElementById('search').value);
+      } catch (err) {
+        console.error('Save failed:', err);
+        updateStatus('error');
+        showToast('Failed to save. Check console.');
+      }
+    }
+    
+    function downloadJSON() {
+      const blob = new Blob([JSON.stringify(translations, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'translations.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('Downloaded translations.json');
+    }
+    
+    // Event listeners
+    document.getElementById('search').addEventListener('input', (e) => {
+      renderTranslations(e.target.value);
+    });
+    
+    document.getElementById('save-btn').addEventListener('click', saveTranslations);
+    document.getElementById('download-btn').addEventListener('click', downloadJSON);
+    
+    // Warn before leaving with unsaved changes
+    window.addEventListener('beforeunload', (e) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+    
+    // Initialize
+    loadTranslations();
+  </script>
+
+</body>
+</html>

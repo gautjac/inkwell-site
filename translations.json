@@ -1,0 +1,342 @@
+{
+  "nav.features": {
+    "en": "Features",
+    "fr": "Fonctionnalités"
+  },
+  "nav.pricing": {
+    "en": "Pricing",
+    "fr": "Tarifs"
+  },
+  "nav.openApp": {
+    "en": "Open Inkwell",
+    "fr": "Ouvrir Inkwell"
+  },
+  "hero.badge": {
+    "en": "Free lyric writing studio",
+    "fr": "Studio d'écriture de paroles — gratuit"
+  },
+  "hero.title": {
+    "en": "Write better songs.<br><em>In your voice.</em>",
+    "fr": "Écrivez de meilleures chansons.<br><em>Avec votre voix.</em>"
+  },
+  "hero.subtitle": {
+    "en": "Inkwell is a lyric writing studio with an AI co-writer that learns how you write — so it can help without overwriting you.",
+    "fr": "Inkwell est un studio d'écriture de paroles avec un co-auteur IA qui apprend votre style — pour vous aider sans vous remplacer."
+  },
+  "hero.cta.start": {
+    "en": "Start Writing",
+    "fr": "Commencer à écrire"
+  },
+  "hero.cta.features": {
+    "en": "See Features",
+    "fr": "Voir les fonctionnalités"
+  },
+  "highlight.label": {
+    "en": "AI Co-Writer",
+    "fr": "Co-auteur IA"
+  },
+  "highlight.title": {
+    "en": "14 tools. Zero generic output.",
+    "fr": "14 outils. Zéro résultat générique."
+  },
+  "highlight.subtitle": {
+    "en": "The AI panel isn't a chatbot — it's a set of focused tools built for lyric writing. Rhyme finders, phrase builders, word families, and more. Each one designed to spark ideas, not replace yours.",
+    "fr": "Le panneau IA n'est pas un chatbot — c'est un ensemble d'outils conçus pour l'écriture de paroles. Chercheur de rimes, constructeur de phrases, familles de mots, et plus. Chacun conçu pour inspirer, pas pour vous remplacer."
+  },
+  "tools.rhyme": {
+    "en": "Rhyme Finder",
+    "fr": "Chercheur de rimes"
+  },
+  "tools.phrase": {
+    "en": "Phrase Finder",
+    "fr": "Chercheur de phrases"
+  },
+  "tools.wordFamily": {
+    "en": "Word Families",
+    "fr": "Familles de mots"
+  },
+  "tools.simile": {
+    "en": "Simile Builder",
+    "fr": "Constructeur de comparaisons"
+  },
+  "tools.alliteration": {
+    "en": "Alliteration",
+    "fr": "Allitération"
+  },
+  "tools.rewriter": {
+    "en": "Line Rewriter",
+    "fr": "Réécriture de vers"
+  },
+  "tools.more": {
+    "en": "+ 8 more",
+    "fr": "+ 8 autres"
+  },
+  "features.label": {
+    "en": "Features",
+    "fr": "Fonctionnalités"
+  },
+  "features.title": {
+    "en": "Everything you need, nothing you don't",
+    "fr": "Tout ce qu'il vous faut, rien de superflu"
+  },
+  "features.subtitle": {
+    "en": "Built by songwriters who got tired of switching between five different apps.",
+    "fr": "Construit par des auteurs-compositeurs fatigués de jongler entre cinq applications différentes."
+  },
+  "feature.voiceProfiles.title": {
+    "en": "Voice Profiles",
+    "fr": "Profils de voix"
+  },
+  "feature.voiceProfiles.desc": {
+    "en": "During onboarding, the AI learns your writing style — your tendencies, your vocabulary, your instincts. Suggestions sound like you, not a machine.",
+    "fr": "Lors de l'accueil, l'IA apprend votre style d'écriture — vos tendances, votre vocabulaire, vos instincts. Les suggestions sonnent comme vous, pas comme une machine."
+  },
+  "feature.versioning.title": {
+    "en": "Section Versioning",
+    "fr": "Versionnement de sections"
+  },
+  "feature.versioning.desc": {
+    "en": "Fork any section to try a different direction. Compare A/B versions side by side. Keep what works, discard what doesn't — safely.",
+    "fr": "Dupliquez n'importe quelle section pour essayer une autre direction. Comparez les versions A/B côte à côte. Gardez ce qui fonctionne, abandonnez le reste — en toute sécurité."
+  },
+  "feature.scratchPad.title": {
+    "en": "Scratch Pad",
+    "fr": "Bloc-notes"
+  },
+  "feature.scratchPad.desc": {
+    "en": "Collect AI suggestions, stray ideas, and half-formed lines without leaving your flow. Drag them into your lyrics when you're ready.",
+    "fr": "Collectez les suggestions de l'IA, les idées vagabondes et les vers à moitié formés sans quitter votre flux. Glissez-les dans vos paroles quand vous êtes prêt."
+  },
+  "feature.rhymeBrowser.title": {
+    "en": "Rhyme Browser",
+    "fr": "Navigateur de rimes"
+  },
+  "feature.rhymeBrowser.desc": {
+    "en": "Filter rhymes by syllable count, perfect vs. near matches, and more. A proper rhyme dictionary, not a toy.",
+    "fr": "Filtrez les rimes par nombre de syllabes, correspondances parfaites ou approximatives, et plus encore. Un vrai dictionnaire de rimes, pas un gadget."
+  },
+  "feature.intensifiers.title": {
+    "en": "Intensifiers Panel",
+    "fr": "Panneau d'intensificateurs"
+  },
+  "feature.intensifiers.desc": {
+    "en": "Mood-aware power words at your fingertips. When a line needs more weight, browse words that match the emotional register you're working in.",
+    "fr": "Des mots puissants adaptés à l'humeur, à portée de main. Quand un vers a besoin de plus de poids, parcourez des mots qui correspondent au registre émotionnel de votre travail."
+  },
+  "feature.audioRecorder.title": {
+    "en": "Audio Recorder",
+    "fr": "Enregistreur audio"
+  },
+  "feature.audioRecorder.desc": {
+    "en": "Capture melody ideas, vocal phrasing, or rough demos right alongside your lyrics. Everything stays in one place.",
+    "fr": "Capturez des idées de mélodie, des phrasés vocaux ou des maquettes brutes juste à côté de vos paroles. Tout reste au même endroit."
+  },
+  "feature.overview.title": {
+    "en": "Full Song Overview",
+    "fr": "Vue d'ensemble"
+  },
+  "feature.overview.desc": {
+    "en": "See your entire song in a split view. Jump between sections, spot structural issues, and get the big picture without losing your place.",
+    "fr": "Visualisez votre chanson entière en vue partagée. Naviguez entre les sections, repérez les problèmes structurels et gardez une vue d'ensemble sans perdre votre place."
+  },
+  "feature.history.title": {
+    "en": "History & Undo",
+    "fr": "Historique et annulation"
+  },
+  "feature.history.desc": {
+    "en": "Experiment without fear. Full history lets you rewind to any previous state. Try things — you can always go back.",
+    "fr": "Expérimentez sans crainte. L'historique complet vous permet de revenir à n'importe quel état précédent. Essayez — vous pouvez toujours revenir en arrière."
+  },
+  "feature.bilingual.title": {
+    "en": "Bilingual EN/FR",
+    "fr": "Bilingue EN/FR"
+  },
+  "feature.bilingual.desc": {
+    "en": "Full interface and AI tools available in both English and French. Write in the language that fits the song.",
+    "fr": "Interface complète et outils IA disponibles en anglais et en français. Écrivez dans la langue qui convient à la chanson."
+  },
+  "why.label": {
+    "en": "Why Inkwell",
+    "fr": "Pourquoi Inkwell"
+  },
+  "why.title": {
+    "en": "Your tool, your voice",
+    "fr": "Votre outil, votre voix"
+  },
+  "why.notGeneric.title": {
+    "en": "Not a generic AI",
+    "fr": "Pas une IA générique"
+  },
+  "why.notGeneric.desc": {
+    "en": "It learns your specific voice and style. Suggestions are shaped by how you write, not by how everyone writes.",
+    "fr": "Elle apprend votre voix et votre style spécifiques. Les suggestions sont façonnées par votre façon d'écrire, pas par celle de tout le monde."
+  },
+  "why.specificity.title": {
+    "en": "Specificity over abstraction",
+    "fr": "La précision avant tout"
+  },
+  "why.specificity.desc": {
+    "en": "Trained to push for concrete details and vivid imagery. Vague lyrics are easy — specific ones are what people remember.",
+    "fr": "Conçu pour encourager les détails concrets et les images vivantes. Les paroles vagues, c'est facile — les paroles précises, c'est ce dont on se souvient."
+  },
+  "why.classic.title": {
+    "en": "Classic tools, modern feel",
+    "fr": "Outils classiques, expérience moderne"
+  },
+  "why.classic.desc": {
+    "en": "Inspired by tools like MasterWriter, rebuilt for how people actually write today — with AI where it helps, craft tools where it doesn't.",
+    "fr": "Inspiré par des outils comme MasterWriter, reconstruit pour la façon dont les gens écrivent aujourd'hui — avec l'IA là où elle aide, des outils de métier là où elle n'aide pas."
+  },
+  "why.free.title": {
+    "en": "Generous free tier",
+    "fr": "Version gratuite généreuse"
+  },
+  "why.free.desc": {
+    "en": "50 AI generations per month, free forever. Upgrade when you're ready — or don't.",
+    "fr": "50 générations IA par mois, gratuit pour toujours. Passez à la version supérieure quand vous êtes prêt — ou pas."
+  },
+  "pricing.label": {
+    "en": "Pricing",
+    "fr": "Tarifs"
+  },
+  "pricing.title": {
+    "en": "Start free. Upgrade when you need more.",
+    "fr": "Commencez gratuitement. Passez à la version supérieure quand vous en avez besoin."
+  },
+  "pricing.free.name": {
+    "en": "Free",
+    "fr": "Gratuit"
+  },
+  "pricing.free.period": {
+    "en": "forever",
+    "fr": "pour toujours"
+  },
+  "pricing.free.f1": {
+    "en": "50 AI generations / month",
+    "fr": "50 générations IA / mois"
+  },
+  "pricing.free.f2": {
+    "en": "All 14 AI tools",
+    "fr": "Les 14 outils IA"
+  },
+  "pricing.free.f3": {
+    "en": "Voice profiles (local)",
+    "fr": "Profils de voix (local)"
+  },
+  "pricing.free.f4": {
+    "en": "Export to TXT / Markdown",
+    "fr": "Export TXT / Markdown"
+  },
+  "pricing.free.cta": {
+    "en": "Start Writing",
+    "fr": "Commencer à écrire"
+  },
+  "pricing.creator.name": {
+    "en": "Creator",
+    "fr": "Creator"
+  },
+  "pricing.creator.badge": {
+    "en": "Most Popular",
+    "fr": "Le plus populaire"
+  },
+  "pricing.creator.period": {
+    "en": "/ month",
+    "fr": "/ mois"
+  },
+  "pricing.creator.f1": {
+    "en": "500 AI generations / month",
+    "fr": "500 générations IA / mois"
+  },
+  "pricing.creator.f2": {
+    "en": "All 14 AI tools",
+    "fr": "Les 14 outils IA"
+  },
+  "pricing.creator.f3": {
+    "en": "Voice profiles (cloud sync)",
+    "fr": "Profils de voix (sync cloud)"
+  },
+  "pricing.creator.f4": {
+    "en": "Section versioning",
+    "fr": "Gestion des versions"
+  },
+  "pricing.creator.f5": {
+    "en": "Audio recorder",
+    "fr": "Enregistreur audio"
+  },
+  "pricing.creator.f6": {
+    "en": "Export to TXT / Markdown / PDF",
+    "fr": "Export TXT / Markdown / PDF"
+  },
+  "pricing.creator.f7": {
+    "en": "Priority support",
+    "fr": "Support prioritaire"
+  },
+  "pricing.creator.cta": {
+    "en": "Get Creator",
+    "fr": "Choisir Creator"
+  },
+  "pricing.pro.name": {
+    "en": "Pro",
+    "fr": "Pro"
+  },
+  "pricing.pro.period": {
+    "en": "/ month",
+    "fr": "/ mois"
+  },
+  "pricing.pro.f1": {
+    "en": "Unlimited AI generations",
+    "fr": "Générations IA illimitées"
+  },
+  "pricing.pro.f2": {
+    "en": "All 14 AI tools",
+    "fr": "Les 14 outils IA"
+  },
+  "pricing.pro.f3": {
+    "en": "Voice profiles (cloud sync)",
+    "fr": "Profils de voix (sync cloud)"
+  },
+  "pricing.pro.f4": {
+    "en": "Multi-device sync",
+    "fr": "Sync multi-appareils"
+  },
+  "pricing.pro.f5": {
+    "en": "Audio recorder",
+    "fr": "Enregistreur audio"
+  },
+  "pricing.pro.f6": {
+    "en": "All export formats",
+    "fr": "Tous les formats d'export"
+  },
+  "pricing.pro.f7": {
+    "en": "Priority support",
+    "fr": "Support prioritaire"
+  },
+  "pricing.pro.cta": {
+    "en": "Get Pro",
+    "fr": "Choisir Pro"
+  },
+  "pricing.note": {
+    "en": "All plans include a 7-day money-back guarantee. Cancel anytime.",
+    "fr": "Tous les plans incluent une garantie de remboursement de 7 jours. Annulez à tout moment."
+  },
+  "cta.title": {
+    "en": "Your next song is waiting",
+    "fr": "Votre prochaine chanson vous attend"
+  },
+  "cta.subtitle": {
+    "en": "Start with 50 free AI generations per month. No credit card required.",
+    "fr": "Commencez avec 50 générations IA gratuites par mois. Aucune carte de crédit requise."
+  },
+  "cta.button": {
+    "en": "Open Inkwell",
+    "fr": "Ouvrir Inkwell"
+  },
+  "footer.copyright": {
+    "en": "© 2026 Inkwell. A tool for songwriters.",
+    "fr": "© 2026 Inkwell. Un outil pour les auteurs-compositeurs."
+  },
+  "footer.openApp": {
+    "en": "Open App",
+    "fr": "Ouvrir l'app"
+  }
+}
